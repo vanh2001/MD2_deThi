@@ -5,9 +5,10 @@ import controller.Validate;
 import model.PhoneBook;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class InputContact {
-    private static List<PhoneBook> personListClient = PhoneBookManager.phoneBookList;
+    private static List<PhoneBook> phoneBookListClient = PhoneBookManager.phoneBookList;
     public static Validate valid = new Validate();
 
     public static void phoneBooks (){
@@ -25,29 +26,90 @@ public class InputContact {
     }
 
     public static PhoneBook createNewContact(){
-        System.out.println("Input the Contact Group: ");
+        System.out.print("Input the Contact Group: ");
         String group = valid.checkNullString();
 
-        System.out.println("Input the Name Contact: ");
+        System.out.print("Input the Name Contact: ");
         String name = valid.checkNullString();
 
-        System.out.println("Input the Phone Number: ");
+        System.out.print("Input the Phone Number: ");
         String phoneNumber = valid.checkPhoneNumber();
 
-        System.out.println("Input the gender: ");
+        System.out.print("Input the gender: ");
         boolean gender = valid.checkGender();
 
-        System.out.println("Input the address: ");
+        System.out.print("Input the address: ");
         String address = valid.checkNullString();
 
-        System.out.println("Input the email: ");
+        System.out.print("Input the email: ");
         String email = valid.checkEmail();
 
         PhoneBook p = new PhoneBook(group, name, phoneNumber, gender, address, email);
         return p;
     }
 
-    public static void editContactById(){
+    public static void editContactByIndex(){
+        System.out.print("Input the phone number: ");
+        String phoneNumber = valid.checkNullString();
+        int check = -1;
+        if(PhoneBookManager.getIndexByPhoneNumber(phoneNumber) == check){
+            System.out.println("Can not find the contact!");
+        }else {
+            int index = PhoneBookManager.getIndexByPhoneNumber(phoneNumber);
+            if(phoneBookListClient.get(index) instanceof PhoneBook){
+                System.out.println("Editting the contact... ");
+                System.out.println("Edit the group: " + "(" + phoneBookListClient.get(index).getContactGroup() + ")");
+                String editGroup = valid.checkNullString();
 
+                System.out.println("Edit the name: " + "(" + phoneBookListClient.get(index).getNameContact() + ")");
+                String editName = valid.checkNullString();
+
+                System.out.println("Edit the phone number: " + "(" + phoneBookListClient.get(index).getPhoneNumber() + ")");
+                String editPhoneNumber = valid.checkPhoneNumber();
+
+                System.out.println("Edit the gender: " + "(" + phoneBookListClient.get(index).isGender() + ")");
+                boolean editGender = valid.checkGender();
+
+                System.out.println("Edit the address: " + "(" + phoneBookListClient.get(index).getAddress() + ")");
+                String editAddress = valid.checkNullString();
+
+                System.out.println("Edit the email: " + "(" + phoneBookListClient.get(index).getEmail() + ")");
+                String editEmail = valid.checkEmail();
+
+                PhoneBook p = new PhoneBook(editGroup, editName, editPhoneNumber, editGender, editAddress, editEmail);
+                PhoneBookManager.editContactByIndex(index, p);
+            }
+        }
+    }
+
+    public static void deleteByIndex(){
+        System.out.print("Input the phone number: ");
+        String phoneNumber = valid.checkNullString();
+        int index = PhoneBookManager.getIndexByPhoneNumber(phoneNumber);
+        while (true){
+            if(index == -1) {
+                System.out.println("Don't have a contact to remove");
+                break;
+            }else {
+                PhoneBookManager.deleteContactByIndex(index);
+                break;
+            }
+        }
+
+    }
+
+    public static void findByIndex(){
+        System.out.print("Input the phone number: ");
+        String phoneNumber = valid.checkNullString();
+        int index = PhoneBookManager.getIndexByPhoneNumber(phoneNumber);
+        while (true){
+            if(index == -1){
+                System.out.println("Don't have a contact to find");
+                break;
+            }else {
+                System.out.println(phoneBookListClient.get(index));
+                break;
+            }
+        }
     }
 }

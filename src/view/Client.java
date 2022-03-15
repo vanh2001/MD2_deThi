@@ -31,10 +31,17 @@ public class Client {
                     PhoneBookManager.addNewContact(phoneBook);
                     break;
                 case 3:
+                    InputContact.editContactByIndex();
                     break;
                 case 4:
+                    InputContact.deleteByIndex();
                     break;
                 case 5:
+                    InputContact.findByIndex();
+                    break;
+                case 6:
+                    break;
+                case 7:
                     break;
                 case 8:
                     System.exit(0);
